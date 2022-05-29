@@ -1,9 +1,12 @@
 package com.annida.registration.model;
 
 import com.annida.registration.model.listener.StudentRegistrationListener;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -31,8 +34,9 @@ public class StudentRegistration {
     @Column(name = "birth_place")
     private String birthPlace;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birth_date")
-    private LocalDateTime birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "gender")
     private String gender;
@@ -53,7 +57,7 @@ public class StudentRegistration {
     private String fatherName;
 
     @Column(name = "father_education")
-    private String fatherEducation;
+    private Integer fatherEducation;
 
     @Column(name = "father_occupation")
     private Integer fatherOccupation;
@@ -68,7 +72,7 @@ public class StudentRegistration {
     private String motherName;
 
     @Column(name = "mother_education")
-    private String motherEducation;
+    private Integer motherEducation;
 
     @Column(name = "mother_occupation")
     private Integer motherOccupation;
@@ -94,13 +98,11 @@ public class StudentRegistration {
     @Column(name = "mutation_to")
     private String mutationTo;
 
-    @ManyToOne
     @JoinColumn(name = "school_year", referencedColumnName = "id")
-    private SchoolYear schoolYear;
+    private String schoolYear;
 
-    @ManyToOne
     @JoinColumn(name = "religion", referencedColumnName = "id")
-    private Religion religion;
+    private String religion;
 
     @OneToOne
     @JoinColumn(name = "birth_certificate", referencedColumnName = "id")

@@ -30,4 +30,13 @@ public class File {
 
     @Column(name = "is_active")
     private boolean isActive;
+
+    public File() {}
+
+    public File(byte[] file, String name, String type) {
+        this.file = file;
+        this.type = type;
+        this.name = name;
+        this.isActive = true;
+    }
 }

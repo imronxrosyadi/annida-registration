@@ -14,6 +14,4 @@ public interface StudentRegistrationService {
 
     StudentRegistration save(StudentRegistration studentRegistration, MultipartFile birthCertificate, MultipartFile familyCard) throws Exception;
 
-    void deleteById(String id) throws Exception;
-
 }

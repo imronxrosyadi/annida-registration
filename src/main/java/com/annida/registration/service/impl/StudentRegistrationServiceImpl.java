@@ -40,30 +40,20 @@ public class StudentRegistrationServiceImpl implements StudentRegistrationServic
     @Transactional
     @Override
     public StudentRegistration save(StudentRegistration studentRegistration, MultipartFile birthCertificate, MultipartFile familyCard) throws Exception {
+        File birthCert = new File(birthCertificate.getBytes(), birthCertificate.getOriginalFilename(), birthCertificate.getContentType());
+        studentRegistration.setBirthCertificate(fileService.save(birthCert));
+
+        File famCard = new File(familyCard.getBytes(), familyCard.getOriginalFilename(), familyCard.getContentType());
+        studentRegistration.setFamilyCard(fileService.save(famCard));
+
+        studentRegistration = studentRegistrationRepository.save(studentRegistration);
+
         Approval approval = new Approval();
         approval.setStudentRegistration(studentRegistration);
         approval.setApprovalDoc(false);
         approval.setApprovalPayment(false);
         approvalService.save(approval);
 
-        File birthCert = new File();
-        birthCert.setFile(birthCertificate.getBytes());
-        birthCert.setName(birthCertificate.getOriginalFilename());
-        birthCert.setType(birthCertificate.getContentType());
-        birthCert.setActive(true);
-        studentRegistration.setBirthCertificate(fileService.save(birthCert));
-
-        File famCard = new File();
-        famCard.setFile(familyCard.getBytes());
-        famCard.setName(familyCard.getOriginalFilename());
-        famCard.setType(familyCard.getContentType());
-        famCard.setActive(true);
-        studentRegistration.setFamilyCard(fileService.save(famCard));
-        return studentRegistrationRepository.save(studentRegistration);
-    }
-
-    @Override
-    public void deleteById(String id) throws Exception {
-
+        return studentRegistration;
     }
 }
