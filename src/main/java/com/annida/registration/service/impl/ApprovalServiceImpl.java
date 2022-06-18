@@ -50,6 +50,13 @@ public class ApprovalServiceImpl implements ApprovalService {
     }
 
     @Override
+    public Page<Approval> findByStatusFalse(int page, int size, String sortBy, String prefix) throws Exception {
+        Pageable paging = PageRequest.of(page, size, Sort.Direction.fromString(prefix),sortBy);
+        return approvalRepository.findByStatusFalse(paging);
+    }
+
+
+    @Override
     public Approval save(Approval approval) throws Exception {
         return approvalRepository.save(approval);
     }

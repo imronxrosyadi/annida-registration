@@ -16,6 +16,7 @@ public interface ApprovalService {
     Optional<Approval> findByTicketNumber(String ticketNumber) throws Exception;
 
     Page<Approval> findAllPaging(int page, int size, String sortBy, String prefix) throws Exception;
+    Page<Approval> findByStatusFalse(int page, int size, String sortBy, String prefix) throws Exception;
 
     Approval save(Approval approval) throws Exception;
 
