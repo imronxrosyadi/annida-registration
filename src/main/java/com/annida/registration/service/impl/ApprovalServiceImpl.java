@@ -1,9 +1,14 @@
 package com.annida.registration.service.impl;
 
+import com.annida.registration.enumeration.CommonEnum;
 import com.annida.registration.model.Approval;
 import com.annida.registration.repository.ApprovalRepository;
 import com.annida.registration.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +37,16 @@ public class ApprovalServiceImpl implements ApprovalService {
         entity.get().getStudentRegistration().setBirthCertificate(null);
         entity.get().getStudentRegistration().setProofOfPayment(null);
         return entity;
+    }
+
+    @Override
+    public Page<Approval> findAllPaging(int page, int size, String sortBy, String prefix) throws Exception {
+        Sort sort = Sort.by(sortBy).descending();
+        if (CommonEnum.ASC.name().equals(prefix)) {
+            sort = Sort.by(sortBy).ascending();
+        }
+        Pageable paging = PageRequest.of(page, size, sort);
+        return approvalRepository.findAll(paging);
     }
 
     @Override

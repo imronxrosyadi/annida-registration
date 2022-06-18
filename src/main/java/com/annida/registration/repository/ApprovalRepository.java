@@ -10,9 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface ApprovalRepository extends JpaRepository<Approval, String> {
-
-//    @Query("SELECT a FROM Approval a WHERE a.ticketNumber = :ticketNumber")
-//    Approval getByTicketNumber(String ticketNumber);
-
     Optional<Approval> findByTicketNumber(String ticketNumber);
 }
