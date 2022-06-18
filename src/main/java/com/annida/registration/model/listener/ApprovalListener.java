@@ -11,13 +11,15 @@ public class ApprovalListener {
 
     @PrePersist
     void onPrePersist(Approval approval) {
-        if (approval.getId() == null)
+        if (approval.getId() == null) {
             approval.setId(UUID.randomUUID().toString());
+            approval.setStatus(true);
+        }
 
-        if (approval.getApprovalDocDate() == null)
+        if (approval.isApprovalDoc())
             approval.setApprovalDocDate(LocalDateTime.now());
 
-        if (approval.getApprovalPaymentDate() == null)
+        if (approval.isApprovalPayment())
             approval.setApprovalPaymentDate(LocalDateTime.now());
 
         if (approval.getCreatedDate() == null)

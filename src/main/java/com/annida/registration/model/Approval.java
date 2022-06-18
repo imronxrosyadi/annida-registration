@@ -16,6 +16,9 @@ public class Approval {
     @Column(name = "id", unique = true, nullable = false)
     private String id;
 
+    @Column(name = "ticket_number", unique = true, nullable = false)
+    private String ticketNumber;
+
     @ManyToOne
     @JoinColumn(name = "student_registration", referencedColumnName = "id")
     private StudentRegistration studentRegistration;
@@ -34,4 +37,13 @@ public class Approval {
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    @Column(name = "approval_doc_retry")
+    private Integer approvalDocRetry;
+
+    @Column(name = "approval_payment_retry")
+    private Integer approvalDocPayment;
+
+    @Column(name = "status", nullable = false)
+    private Boolean status;
 }

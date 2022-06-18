@@ -6,7 +6,6 @@ import com.annida.registration.service.StudentRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class StudentRegistrationController {
     }
 
     @PostMapping
-    public Response<?> save(@RequestPart(value = "studentRegistration") StudentRegistration studentRegistration) {
+    public Response<?> save(@RequestBody StudentRegistration studentRegistration) {
         try {
             return new Response<>(HttpStatus.CREATED, studentRegistrationService.save(studentRegistration));
         } catch (Exception e) {

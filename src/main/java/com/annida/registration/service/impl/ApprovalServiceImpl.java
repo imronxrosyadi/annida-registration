@@ -26,6 +26,15 @@ public class ApprovalServiceImpl implements ApprovalService {
     }
 
     @Override
+    public Optional<Approval> findByTicketNumber(String ticketNumber) throws Exception {
+        Optional<Approval> entity = approvalRepository.findByTicketNumber(ticketNumber);
+        entity.get().getStudentRegistration().setFamilyCard(null);
+        entity.get().getStudentRegistration().setBirthCertificate(null);
+        entity.get().getStudentRegistration().setProofOfPayment(null);
+        return entity;
+    }
+
+    @Override
     public Approval save(Approval approval) throws Exception {
         return approvalRepository.save(approval);
     }
