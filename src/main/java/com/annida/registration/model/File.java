@@ -17,7 +17,7 @@ public class File {
     private String id;
 
     @Column(name = "file")
-    private byte[] file;
+    private String file;
 
     @Column(name = "file_name")
     private String name;
@@ -33,7 +33,7 @@ public class File {
 
     public File() {}
 
-    public File(byte[] file, String name, String type) {
+    public File(String file, String name, String type) {
         this.file = file;
         this.type = type;
         this.name = name;

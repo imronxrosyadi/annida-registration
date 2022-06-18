@@ -97,11 +97,13 @@ public class StudentRegistration {
     @Column(name = "mutation_to")
     private String mutationTo;
 
+    @ManyToOne
     @JoinColumn(name = "school_year", referencedColumnName = "id")
-    private String schoolYear;
+    private SchoolYear schoolYear;
 
+    @ManyToOne
     @JoinColumn(name = "religion", referencedColumnName = "id")
-    private String religion;
+    private Religion religion;
 
     @OneToOne
     @JoinColumn(name = "birth_certificate", referencedColumnName = "id")
@@ -110,5 +112,9 @@ public class StudentRegistration {
     @OneToOne
     @JoinColumn(name = "family_card", referencedColumnName = "id")
     private File familyCard;
+
+    @OneToOne
+    @JoinColumn(name = "proof_of_payment", referencedColumnName = "id")
+    private File proofOfPayment;
 
 }

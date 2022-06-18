@@ -12,6 +12,6 @@ public interface StudentRegistrationService {
 
     Optional<StudentRegistration> findById(String id) throws Exception;
 
-    StudentRegistration save(StudentRegistration studentRegistration, MultipartFile birthCertificate, MultipartFile familyCard) throws Exception;
+    StudentRegistration save(StudentRegistration studentRegistration) throws Exception;
 
 }

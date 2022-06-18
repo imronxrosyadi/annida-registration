@@ -38,11 +38,9 @@ public class StudentRegistrationController {
     }
 
     @PostMapping
-    public Response<?> save(@RequestPart(value = "studentRegistration") StudentRegistration studentRegistration,
-                            @RequestPart(value = "birthCertificate", required = false) MultipartFile birthCertificate,
-                            @RequestPart(value = "familyCard", required = false) MultipartFile familyCard) {
+    public Response<?> save(@RequestPart(value = "studentRegistration") StudentRegistration studentRegistration) {
         try {
-            return new Response<>(HttpStatus.CREATED, studentRegistrationService.save(studentRegistration, birthCertificate, familyCard));
+            return new Response<>(HttpStatus.CREATED, studentRegistrationService.save(studentRegistration));
         } catch (Exception e) {
             e.printStackTrace();
             return new Response<>(HttpStatus.INTERNAL_SERVER_ERROR, null, e.getMessage());

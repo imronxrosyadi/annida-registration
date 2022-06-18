@@ -1,6 +1,7 @@
 package com.annida.registration.security;
 
 import com.annida.registration.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -21,6 +22,9 @@ public class ApiSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -32,7 +36,7 @@ public class ApiSecurity extends WebSecurityConfigurerAdapter {
 //		.and().httpBasic();
 
         // authentication
-        http.addFilter(new AuthenticationFilter(super.authenticationManager(), userService));
+        http.addFilter(new AuthenticationFilter(super.authenticationManager(), userService, objectMapper));
 
         // authorization
         http.addFilter(new AuthorizationFilter(super.authenticationManager()));
@@ -45,7 +49,7 @@ public class ApiSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.POST, "/user")
+        web.ignoring().antMatchers(HttpMethod.POST, "/user", "/registration")
                 .antMatchers(HttpMethod.PATCH, "/user/forget-password");
     }
 
