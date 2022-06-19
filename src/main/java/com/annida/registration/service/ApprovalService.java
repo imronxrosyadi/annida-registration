@@ -1,6 +1,7 @@
 package com.annida.registration.service;
 
 import com.annida.registration.model.Approval;
+import com.annida.registration.model.StudentRegistration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,7 +15,7 @@ public interface ApprovalService {
     Optional<Approval> findById(String id) throws Exception;
 
     Optional<Approval> findByTicketNumber(String ticketNumber) throws Exception;
-
+    Optional<Approval> findByStudentRegistration(StudentRegistration studentRegistration) throws Exception;
     Page<Approval> findAllPaging(int page, int size, String sortBy, String prefix) throws Exception;
     Page<Approval> findAllAdmin(int page, int size, String sortBy, String prefix) throws Exception;
     Approval save(Approval approval) throws Exception;

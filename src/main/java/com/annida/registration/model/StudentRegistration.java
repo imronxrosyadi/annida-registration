@@ -85,11 +85,13 @@ public class StudentRegistration {
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "mutation_in")
-    private LocalDateTime mutationIn;
+    private LocalDate mutationIn;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "mutation_out")
-    private LocalDateTime mutationOut;
+    private LocalDate mutationOut;
 
     @Column(name = "mutation_origin")
     private String mutationOrigin;

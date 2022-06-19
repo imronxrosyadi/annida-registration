@@ -3,6 +3,7 @@ package com.annida.registration.service.impl;
 import com.annida.registration.enumeration.CommonEnum;
 import com.annida.registration.enumeration.StatusEnum;
 import com.annida.registration.model.Approval;
+import com.annida.registration.model.StudentRegistration;
 import com.annida.registration.repository.ApprovalRepository;
 import com.annida.registration.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class ApprovalServiceImpl implements ApprovalService {
         entity.get().getStudentRegistration().setBirthCertificate(null);
         entity.get().getStudentRegistration().setProofOfPayment(null);
         return entity;
+    }
+
+    @Override
+    public Optional<Approval> findByStudentRegistration(StudentRegistration studentRegistration) throws Exception {
+        return approvalRepository.findByStudentRegistration(studentRegistration);
     }
 
     @Override

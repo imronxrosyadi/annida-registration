@@ -2,6 +2,7 @@ package com.annida.registration.service.impl;
 
 import com.annida.registration.model.Approval;
 import com.annida.registration.model.StudentRegistration;
+import com.annida.registration.model.dto.StudentRegistrationDto;
 import com.annida.registration.repository.StudentRegistrationRepository;
 import com.annida.registration.service.ApprovalService;
 import com.annida.registration.service.FileService;
@@ -10,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +40,7 @@ public class StudentRegistrationServiceImpl implements StudentRegistrationServic
 
     @Transactional
     @Override
-    public StudentRegistration save(StudentRegistration studentRegistration) throws Exception {
+    public StudentRegistrationDto save(StudentRegistration studentRegistration) throws Exception {
 //        File birthCert = new File(Base64.getEncoder().encodeToString(birthCertificate.getBytes()), birthCertificate.getOriginalFilename(), birthCertificate.getContentType());
         studentRegistration.setBirthCertificate(fileService.save(studentRegistration.getBirthCertificate()));
 
@@ -57,7 +56,11 @@ public class StudentRegistrationServiceImpl implements StudentRegistrationServic
         approval.setApprovalPayment(false);
         approvalService.save(approval);
 
-        return studentRegistration;
+        StudentRegistrationDto response = new StudentRegistrationDto();
+        response.setTicketNumber(approval.getTicketNumber());
+        response.setStudentRegistration(studentRegistration);
+
+        return response;
     }
 
     private String generateTicketNumber() {
