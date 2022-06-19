@@ -1,5 +1,6 @@
 package com.annida.registration.model.listener;
 
+import com.annida.registration.enumeration.StatusEnum;
 import com.annida.registration.model.Approval;
 
 import javax.persistence.PrePersist;
@@ -13,7 +14,8 @@ public class ApprovalListener {
     void onPrePersist(Approval approval) {
         if (approval.getId() == null) {
             approval.setId(UUID.randomUUID().toString());
-            approval.setStatus(true);
+            approval.setStatus(StatusEnum.WAITING_APPROVAL_DOC.getStatus());
+            approval.setVersion(0);
         }
 
         if (approval.isApprovalDoc())
@@ -28,5 +30,6 @@ public class ApprovalListener {
 
     @PreUpdate
     void onPreUpdate(Approval approval) {
+
     }
 }

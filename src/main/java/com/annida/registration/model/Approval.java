@@ -45,5 +45,11 @@ public class Approval {
     private Integer approvalDocPayment;
 
     @Column(name = "status", nullable = false)
-    private Boolean status;
+    private Integer status;
+
+    @Column(name = "reason", nullable = false)
+    private String reason;
+
+    @Column(name = "version", nullable = false)
+    private Integer version;
 }

@@ -1,6 +1,7 @@
 package com.annida.registration.service.impl;
 
 import com.annida.registration.enumeration.CommonEnum;
+import com.annida.registration.enumeration.StatusEnum;
 import com.annida.registration.model.Approval;
 import com.annida.registration.repository.ApprovalRepository;
 import com.annida.registration.service.ApprovalService;
@@ -50,9 +51,9 @@ public class ApprovalServiceImpl implements ApprovalService {
     }
 
     @Override
-    public Page<Approval> findByStatusFalse(int page, int size, String sortBy, String prefix) throws Exception {
-        Pageable paging = PageRequest.of(page, size, Sort.Direction.valueOf(prefix),sortBy);
-        return approvalRepository.findByStatusFalse(paging);
+    public Page<Approval> findAllAdmin(int page, int size, String sortBy, String prefix) throws Exception {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.valueOf(prefix),sortBy);
+        return approvalRepository.findAll(pageable);
     }
 
 
@@ -64,5 +65,33 @@ public class ApprovalServiceImpl implements ApprovalService {
     @Override
     public void deleteById(String id) throws Exception {
         approvalRepository.deleteById(id);
+    }
+
+    @Override
+    public void approve(String id) throws Exception {
+        Optional<Approval> entity = approvalRepository.findById(id);
+        if(!entity.get().isApprovalDoc()){
+            entity.get().setApprovalDoc(true);
+            entity.get().setStatus(StatusEnum.WAITING_APPROVAL_PAYMENT.getStatus());
+        } else{
+            entity.get().setApprovalPayment(true);
+            entity.get().setStatus(StatusEnum.APPROVED.getStatus());
+        }
+        approvalRepository.save(entity.get());
+    }
+
+    @Override
+    public void reject(String id) throws Exception {
+        Optional<Approval> entity = approvalRepository.findById(id);
+        if(!entity.get().isApprovalDoc()){
+            entity.get().setApprovalDocRetry(entity.get().getApprovalDocRetry()+1);
+        } else {
+            entity.get().setApprovalDocPayment(entity.get().getApprovalDocRetry()+1);
+        }
+
+        if(entity.get().getApprovalDocRetry() == 3 || entity.get().getApprovalDocPayment() == 3)
+            entity.get().setStatus(StatusEnum.DELETED.getStatus());
+
+        approvalRepository.save(entity.get());
     }
 }

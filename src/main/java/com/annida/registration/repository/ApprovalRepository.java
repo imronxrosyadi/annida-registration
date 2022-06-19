@@ -13,6 +13,4 @@ import java.util.Optional;
 @Repository
 public interface ApprovalRepository extends JpaRepository<Approval, String> {
     Optional<Approval> findByTicketNumber(String ticketNumber);
-
-    Page<Approval> findByStatusFalse(Pageable pageable);
 }
