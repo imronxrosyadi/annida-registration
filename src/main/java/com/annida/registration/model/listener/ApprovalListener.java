@@ -16,6 +16,8 @@ public class ApprovalListener {
             approval.setId(UUID.randomUUID().toString());
             approval.setStatus(StatusEnum.WAITING_APPROVAL_DOC.getStatus());
             approval.setVersion(0);
+            approval.setApprovalDocRetry(0);
+            approval.setApprovalPayRetry(0);
         }
 
         if (approval.isApprovalDoc())

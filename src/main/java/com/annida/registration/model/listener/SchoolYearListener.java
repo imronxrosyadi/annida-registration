@@ -11,8 +11,11 @@ public class SchoolYearListener {
 
     @PrePersist
     void onPrePersist(SchoolYear schoolYear) {
-        if (schoolYear.getId() == null)
+        if (schoolYear.getId() == null) {
             schoolYear.setId(UUID.randomUUID().toString());
+            schoolYear.setActive(true);
+        }
+
 
         if (schoolYear.getCreatedDate() == null)
             schoolYear.setCreatedDate(LocalDateTime.now());

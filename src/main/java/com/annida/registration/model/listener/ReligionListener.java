@@ -11,8 +11,10 @@ public class ReligionListener {
 
     @PrePersist
     void onPrePersist(Religion religion) {
-        if (religion.getId() == null)
+        if (religion.getId() == null) {
             religion.setId(UUID.randomUUID().toString());
+            religion.setActive(true);
+        }
 
         if (religion.getCreatedDate() == null)
             religion.setCreatedDate(LocalDateTime.now());

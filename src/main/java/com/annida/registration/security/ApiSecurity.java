@@ -51,7 +51,7 @@ public class ApiSecurity extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(HttpMethod.POST, "/user", "/registration")
                 .antMatchers(HttpMethod.PATCH, "/user/forget-password")
-                .antMatchers(HttpMethod.GET, "/monitoring/registration/**");
+                .antMatchers(HttpMethod.GET, "/monitoring/registration/**", "/school-year", "/religion");
     }
 
     @Bean

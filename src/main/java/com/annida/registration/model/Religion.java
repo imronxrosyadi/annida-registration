@@ -26,6 +26,6 @@ public class Religion {
     private LocalDateTime updatedDate;
 
     @Column(name = "is_active")
-    private String isActive;
+    private boolean isActive;
 
 }

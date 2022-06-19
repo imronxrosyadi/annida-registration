@@ -42,12 +42,12 @@ public class Approval {
     private Integer approvalDocRetry;
 
     @Column(name = "approval_payment_retry")
-    private Integer approvalDocPayment;
+    private Integer approvalPayRetry;
 
     @Column(name = "status", nullable = false)
     private Integer status;
 
-    @Column(name = "reason", nullable = false)
+    @Column(name = "reason")
     private String reason;
 
     @Column(name = "version", nullable = false)

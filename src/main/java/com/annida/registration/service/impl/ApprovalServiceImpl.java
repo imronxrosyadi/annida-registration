@@ -86,10 +86,10 @@ public class ApprovalServiceImpl implements ApprovalService {
         if(!entity.get().isApprovalDoc()){
             entity.get().setApprovalDocRetry(entity.get().getApprovalDocRetry()+1);
         } else {
-            entity.get().setApprovalDocPayment(entity.get().getApprovalDocRetry()+1);
+            entity.get().setApprovalPayRetry(entity.get().getApprovalDocRetry()+1);
         }
 
-        if(entity.get().getApprovalDocRetry() == 3 || entity.get().getApprovalDocPayment() == 3)
+        if(entity.get().getApprovalDocRetry() == 3 || entity.get().getApprovalPayRetry() == 3)
             entity.get().setStatus(StatusEnum.DELETED.getStatus());
 
         approvalRepository.save(entity.get());
