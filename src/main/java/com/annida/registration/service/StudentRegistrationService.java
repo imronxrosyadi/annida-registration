@@ -15,4 +15,6 @@ public interface StudentRegistrationService {
 
     StudentRegistrationDto save(StudentRegistration studentRegistration) throws Exception;
 
+    StudentRegistrationDto edit(StudentRegistration studentRegistration) throws Exception;
+
 }

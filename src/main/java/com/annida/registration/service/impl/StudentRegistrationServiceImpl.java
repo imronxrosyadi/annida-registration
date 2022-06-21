@@ -1,5 +1,6 @@
 package com.annida.registration.service.impl;
 
+import com.annida.registration.enumeration.StatusEnum;
 import com.annida.registration.model.Approval;
 import com.annida.registration.model.StudentRegistration;
 import com.annida.registration.model.dto.StudentRegistrationDto;
@@ -53,7 +54,36 @@ public class StudentRegistrationServiceImpl implements StudentRegistrationServic
         approval.setTicketNumber(generateTicketNumber());
         approval.setStudentRegistration(studentRegistration);
         approval.setApprovalDoc(false);
+        approval.setApprovalDocStatus(StatusEnum.WAITING_APPROVAL_DOC.getStatus());
         approval.setApprovalPayment(false);
+        approval.setApprovalPaymentStatus(StatusEnum.WAITING_APPROVAL_PAYMENT.getStatus());
+        approval.setStatus(StatusEnum.PENDING.getStatus());
+        approvalService.save(approval);
+
+        StudentRegistrationDto response = new StudentRegistrationDto();
+        response.setTicketNumber(approval.getTicketNumber());
+        response.setStudentRegistration(studentRegistration);
+
+        return response;
+    }
+
+    @Transactional
+    @Override
+    public StudentRegistrationDto edit(StudentRegistration studentRegistration) throws Exception {
+//        File birthCert = new File(Base64.getEncoder().encodeToString(birthCertificate.getBytes()), birthCertificate.getOriginalFilename(), birthCertificate.getContentType());
+        Approval approval = approvalService.findByStudentRegistration(studentRegistration).get();
+
+        studentRegistration.setBirthCertificate(fileService.save(studentRegistration.getBirthCertificate()));
+
+//        File famCard = new File(Base64.getEncoder().encodeToString(familyCard.getBytes()), familyCard.getOriginalFilename(), familyCard.getContentType());
+        studentRegistration.setFamilyCard(fileService.save(studentRegistration.getFamilyCard()));
+        studentRegistration = studentRegistrationRepository.save(studentRegistration);
+        approval.setStudentRegistration(studentRegistration);
+
+        if(approval.isApprovalDoc())
+            approval.setApprovalDocStatus(StatusEnum.DOCUMENT_DATA_HAS_BEEN_UPDATED.getStatus());
+        else
+            approval.setApprovalPaymentStatus(StatusEnum.PAYMENT_DATA_HAS_BEEN_UPDATED.getStatus());
         approvalService.save(approval);
 
         StudentRegistrationDto response = new StudentRegistrationDto();

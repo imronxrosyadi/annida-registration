@@ -26,6 +26,9 @@ public class Approval {
     @Column(name = "approval_doc", nullable = false)
     private boolean approvalDoc;
 
+    @Column(name = "approval_doc_status", nullable = false)
+    private Integer approvalDocStatus;
+
     @Column(name = "approval_doc_date")
     private LocalDateTime approvalDocDate;
 
@@ -34,6 +37,9 @@ public class Approval {
 
     @Column(name = "approval_payment_date")
     private LocalDateTime approvalPaymentDate;
+
+    @Column(name = "approval_payment_status", nullable = false)
+    private Integer approvalPaymentStatus;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;

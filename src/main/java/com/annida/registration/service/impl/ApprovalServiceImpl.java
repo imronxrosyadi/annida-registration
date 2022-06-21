@@ -4,6 +4,7 @@ import com.annida.registration.enumeration.CommonEnum;
 import com.annida.registration.enumeration.StatusEnum;
 import com.annida.registration.model.Approval;
 import com.annida.registration.model.StudentRegistration;
+import com.annida.registration.model.dto.PendingTaskRequestDto;
 import com.annida.registration.repository.ApprovalRepository;
 import com.annida.registration.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,22 @@ public class ApprovalServiceImpl implements ApprovalService {
 //        entity.get().getStudentRegistration().setFamilyCard(null);
 //        entity.get().getStudentRegistration().setBirthCertificate(null);
 //        entity.get().getStudentRegistration().setProofOfPayment(null);
+        /*
+        *fe must check if approvaldocStatus = Invalid_DATA(6), then "sorry your approval DOC rejected because entity.getReason(), please reupload
+        * if approval doc = APPROVED(2) then "approval doc has been approved, please upload your payment"
+        * upload payment pakai api yg mana ?
+        * if approvalpayStatus= Invalid_Data(6),then "sorry your approval PAY rejected because entity.getReason(), please reupload
+        * if approval pay = APPROVED(2) "Congratulations, Your registration has been successful"
+        *
+        * last if entity.getStatus = REJECT(3) then "Maaf Pendaftaran anda telah gagal 3x . please fill new form"
+        * atau bisa check count (doc retry or pay retry) ketika salah satu sudah = 3x ,
+        * wording kata menyesuaikan
+        *
+        * tapi fe baca field yg mana supaya fe tau kalau ini belum di check/diliat sama admin ??
+        * istilahnya kalau dari wording "Pendaftaran Anda Sedang Proses, Mohon Tunggu Kabar Selanjutnya"
+         * */
+
+
         return entity;
     }
 
@@ -78,25 +95,30 @@ public class ApprovalServiceImpl implements ApprovalService {
         Optional<Approval> entity = approvalRepository.findById(id);
         if(!entity.get().isApprovalDoc()){
             entity.get().setApprovalDoc(true);
-//            entity.get().setStatus(StatusEnum.WAITING_APPROVAL_PAYMENT.getStatus());
+            entity.get().setApprovalDocStatus(StatusEnum.APPROVED.getStatus());
         } else{
             entity.get().setApprovalPayment(true);
-//            entity.get().setStatus(StatusEnum.APPROVED.getStatus());
+            entity.get().setApprovalPaymentStatus(StatusEnum.APPROVED.getStatus());
         }
         approvalRepository.save(entity.get());
     }
 
     @Override
-    public void reject(String id) throws Exception {
-        Optional<Approval> entity = approvalRepository.findById(id);
+    public void reject(PendingTaskRequestDto requestDto) throws Exception {
+        Optional<Approval> entity = approvalRepository.findById(requestDto.getId());
         if(!entity.get().isApprovalDoc()){
             entity.get().setApprovalDocRetry(entity.get().getApprovalDocRetry()+1);
+            entity.get().setApprovalDocStatus(StatusEnum.INVALID_DATA.getStatus());
+            entity.get().setReason(requestDto.getReason());
         } else {
-            entity.get().setApprovalPayRetry(entity.get().getApprovalDocRetry()+1);
+            entity.get().setApprovalPayRetry(entity.get().getApprovalPayRetry()+1);
+            entity.get().setApprovalPayRetry(StatusEnum.INVALID_DATA.getStatus());
+            entity.get().setApprovalPaymentStatus(StatusEnum.INVALID_DATA.getStatus());
+            entity.get().setReason(requestDto.getReason());
         }
 
         if(entity.get().getApprovalDocRetry() == 3 || entity.get().getApprovalPayRetry() == 3)
-            entity.get().setStatus(StatusEnum.DELETED.getStatus());
+            entity.get().setStatus(StatusEnum.FAILED.getStatus());
 
         approvalRepository.save(entity.get());
     }

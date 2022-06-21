@@ -2,6 +2,7 @@ package com.annida.registration.service;
 
 import com.annida.registration.model.Approval;
 import com.annida.registration.model.StudentRegistration;
+import com.annida.registration.model.dto.PendingTaskRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -23,6 +24,6 @@ public interface ApprovalService {
     void deleteById(String id) throws Exception;
 
     void approve(String id) throws Exception;
-    void reject(String id) throws Exception;
+    void reject(PendingTaskRequestDto id) throws Exception;
 
 }

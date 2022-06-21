@@ -3,6 +3,7 @@ package com.annida.registration.controller;
 import com.annida.registration.helper.Response;
 import com.annida.registration.helper.ResponsePaging;
 import com.annida.registration.model.Approval;
+import com.annida.registration.model.dto.PendingTaskRequestDto;
 import com.annida.registration.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,10 +53,10 @@ public class ApprovalAdminController {
         }
     }
 
-    @PostMapping("/reject/{id}")
-    public Response<?> reject(@PathVariable(value = "id") String id) {
+    @PostMapping("/reject")
+    public Response<?> reject(@RequestBody PendingTaskRequestDto request) {
         try {
-            approvalService.reject(id);
+            approvalService.reject(request);
             return new Response<>(HttpStatus.OK,null);
         } catch (Exception e) {
             e.printStackTrace();
