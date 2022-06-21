@@ -35,9 +35,9 @@ public class ApprovalServiceImpl implements ApprovalService {
     @Override
     public Optional<Approval> findByTicketNumber(String ticketNumber) throws Exception {
         Optional<Approval> entity = approvalRepository.findByTicketNumber(ticketNumber);
-        entity.get().getStudentRegistration().setFamilyCard(null);
-        entity.get().getStudentRegistration().setBirthCertificate(null);
-        entity.get().getStudentRegistration().setProofOfPayment(null);
+//        entity.get().getStudentRegistration().setFamilyCard(null);
+//        entity.get().getStudentRegistration().setBirthCertificate(null);
+//        entity.get().getStudentRegistration().setProofOfPayment(null);
         return entity;
     }
 
@@ -78,10 +78,10 @@ public class ApprovalServiceImpl implements ApprovalService {
         Optional<Approval> entity = approvalRepository.findById(id);
         if(!entity.get().isApprovalDoc()){
             entity.get().setApprovalDoc(true);
-            entity.get().setStatus(StatusEnum.WAITING_APPROVAL_PAYMENT.getStatus());
+//            entity.get().setStatus(StatusEnum.WAITING_APPROVAL_PAYMENT.getStatus());
         } else{
             entity.get().setApprovalPayment(true);
-            entity.get().setStatus(StatusEnum.APPROVED.getStatus());
+//            entity.get().setStatus(StatusEnum.APPROVED.getStatus());
         }
         approvalRepository.save(entity.get());
     }
