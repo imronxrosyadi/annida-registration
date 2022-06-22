@@ -49,7 +49,7 @@ public class StudentRegistrationController {
     @PutMapping
     public Response<?> edit(@RequestBody StudentRegistration studentRegistration) {
         try {
-            return new Response<>(HttpStatus.CREATED, studentRegistrationService.save(studentRegistration));
+            return new Response<>(HttpStatus.CREATED, studentRegistrationService.edit(studentRegistration));
         } catch (Exception e) {
             e.printStackTrace();
             return new Response<>(HttpStatus.INTERNAL_SERVER_ERROR, null, e.getMessage());

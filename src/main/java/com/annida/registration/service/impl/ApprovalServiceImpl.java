@@ -112,7 +112,6 @@ public class ApprovalServiceImpl implements ApprovalService {
             entity.get().setReason(requestDto.getReason());
         } else {
             entity.get().setApprovalPayRetry(entity.get().getApprovalPayRetry()+1);
-            entity.get().setApprovalPayRetry(StatusEnum.INVALID_DATA.getStatus());
             entity.get().setApprovalPaymentStatus(StatusEnum.INVALID_DATA.getStatus());
             entity.get().setReason(requestDto.getReason());
         }

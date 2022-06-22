@@ -80,7 +80,7 @@ public class StudentRegistrationServiceImpl implements StudentRegistrationServic
         studentRegistration = studentRegistrationRepository.save(studentRegistration);
         approval.setStudentRegistration(studentRegistration);
 
-        if(approval.isApprovalDoc())
+        if(!approval.isApprovalDoc())
             approval.setApprovalDocStatus(StatusEnum.DOCUMENT_DATA_HAS_BEEN_UPDATED.getStatus());
         else
             approval.setApprovalPaymentStatus(StatusEnum.PAYMENT_DATA_HAS_BEEN_UPDATED.getStatus());
