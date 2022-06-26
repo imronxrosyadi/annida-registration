@@ -25,6 +25,7 @@ public class ReligionListener {
 
     @PreUpdate
     void onPreUpdate(Religion religion) {
+        religion.setUpdatedDate(LocalDateTime.now());
     }
 
 }

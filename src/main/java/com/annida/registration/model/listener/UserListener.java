@@ -17,11 +17,11 @@ public class UserListener {
             user.setCreatedDate(LocalDateTime.now());
 
         if (user.getUpdatedDate() == null)
-            user.setCreatedDate(LocalDateTime.now());
+            user.setUpdatedDate(LocalDateTime.now());
     }
 
     @PreUpdate
     void onPreUpdate(User user) {
-        user.setCreatedDate(LocalDateTime.now());
+        user.setUpdatedDate(LocalDateTime.now());
     }
 }

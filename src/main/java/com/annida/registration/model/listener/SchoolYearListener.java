@@ -16,7 +16,6 @@ public class SchoolYearListener {
             schoolYear.setActive(true);
         }
 
-
         if (schoolYear.getCreatedDate() == null)
             schoolYear.setCreatedDate(LocalDateTime.now());
 
@@ -26,6 +25,7 @@ public class SchoolYearListener {
 
     @PreUpdate
     void onPreUpdate(SchoolYear schoolYear) {
+        schoolYear.setUpdatedDate(LocalDateTime.now());
     }
 
 }

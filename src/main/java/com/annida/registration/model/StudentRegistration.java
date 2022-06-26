@@ -107,15 +107,15 @@ public class StudentRegistration {
     @JoinColumn(name = "religion", referencedColumnName = "id")
     private Religion religion;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "birth_certificate", referencedColumnName = "id")
     private File birthCertificate;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "family_card", referencedColumnName = "id")
     private File familyCard;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "proof_of_payment", referencedColumnName = "id")
     private File proofOfPayment;
 

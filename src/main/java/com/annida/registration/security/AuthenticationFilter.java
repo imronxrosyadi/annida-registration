@@ -81,6 +81,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         JSONObject userProfile = new JSONObject();
         userProfile.put("userId", user.getId());
+        userProfile.put("username", user.getUsername());
         userProfile.put("isAdmin", user.isAdmin());
 
         JSONObject loginResponse = new JSONObject();

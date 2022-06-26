@@ -19,12 +19,12 @@ public class ProfileListener {
             profile.setCreatedDate(LocalDateTime.now());
 
         if (profile.getUpdatedDate() == null)
-            profile.setCreatedDate(LocalDateTime.now());
+            profile.setUpdatedDate(LocalDateTime.now());
     }
 
     @PreUpdate
     void onPreUpdate(Profile profile) {
-        profile.setCreatedDate(LocalDateTime.now());
+        profile.setUpdatedDate(LocalDateTime.now());
     }
 
 }
