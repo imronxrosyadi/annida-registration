@@ -100,6 +100,10 @@ public class ApprovalServiceImpl implements ApprovalService {
             entity.get().setApprovalPayment(true);
             entity.get().setApprovalPaymentStatus(StatusEnum.APPROVED.getStatus());
         }
+
+        if(entity.get().isApprovalDoc() && entity.get().isApprovalPayment()) {
+            entity.get().setStatus(StatusEnum.APPROVED.getStatus());
+        }
         approvalRepository.save(entity.get());
     }
 
