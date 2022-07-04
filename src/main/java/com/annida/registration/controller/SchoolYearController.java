@@ -39,7 +39,6 @@ public class SchoolYearController {
     @PostMapping
     public Response<?> save(@RequestBody SchoolYear schoolYear) {
         try {
-//            religion = religionService.save(religion);
             return new Response<>(HttpStatus.CREATED, schoolYearService.save(schoolYear));
         } catch (Exception e) {
             e.printStackTrace();

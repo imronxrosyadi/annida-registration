@@ -43,9 +43,9 @@ public class ApprovalAdminController {
     }
 
     @PostMapping("/approve/{id}")
-    public Response<?> approve(@PathVariable("id") String id) {
+    public Response<?> approve(@PathVariable("id") String id, @RequestHeader (name="Authorization") String token) {
         try {
-            approvalService.approve(id);
+            approvalService.approve(id, token);
             return new Response<>(HttpStatus.OK, null);
         } catch (Exception e) {
             e.printStackTrace();

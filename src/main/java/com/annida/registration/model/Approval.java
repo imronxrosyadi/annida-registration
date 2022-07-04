@@ -19,7 +19,7 @@ public class Approval {
     @Column(name = "ticket_number", unique = true, nullable = false)
     private String ticketNumber;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "student_registration", referencedColumnName = "id")
     private StudentRegistration studentRegistration;
 
@@ -58,4 +58,8 @@ public class Approval {
 
     @Column(name = "version", nullable = false)
     private Integer version;
+
+    @ManyToOne
+    @JoinColumn(name = "user", referencedColumnName = "id")
+    private User user;
 }

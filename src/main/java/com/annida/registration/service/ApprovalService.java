@@ -23,7 +23,7 @@ public interface ApprovalService {
 
     void deleteById(String id) throws Exception;
 
-    void approve(String id) throws Exception;
+    void approve(String id, String token) throws Exception;
     void reject(PendingTaskRequestDto id) throws Exception;
 
 }

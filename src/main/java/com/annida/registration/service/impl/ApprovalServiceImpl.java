@@ -4,9 +4,15 @@ import com.annida.registration.enumeration.CommonEnum;
 import com.annida.registration.enumeration.StatusEnum;
 import com.annida.registration.model.Approval;
 import com.annida.registration.model.StudentRegistration;
+import com.annida.registration.model.User;
+import com.annida.registration.model.dto.AdditionalInfoDto;
 import com.annida.registration.model.dto.PendingTaskRequestDto;
+import com.annida.registration.model.dto.SubjectTokenDto;
 import com.annida.registration.repository.ApprovalRepository;
 import com.annida.registration.service.ApprovalService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,8 +20,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+
+import static java.security.KeyRep.Type.SECRET;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService {
@@ -91,7 +100,7 @@ public class ApprovalServiceImpl implements ApprovalService {
     }
 
     @Override
-    public void approve(String id) throws Exception {
+    public void approve(String id, String token) throws Exception {
         Optional<Approval> entity = approvalRepository.findById(id);
         if(!entity.get().isApprovalDoc()){
             entity.get().setApprovalDoc(true);
@@ -104,6 +113,17 @@ public class ApprovalServiceImpl implements ApprovalService {
         if(entity.get().isApprovalDoc() && entity.get().isApprovalPayment()) {
             entity.get().setStatus(StatusEnum.APPROVED.getStatus());
         }
+
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+        String[] chunks = token.split("\\.");
+        String payload = new String(decoder.decode(chunks[1]));
+
+        SubjectTokenDto subjectTokenDto = new ObjectMapper().readValue(payload, SubjectTokenDto.class);
+        System.out.println("Here is the user id login : " + subjectTokenDto.getSub());
+
+        User user = new User();
+        user.setId(subjectTokenDto.getSub());
+        entity.get().setUser(user);
         approvalRepository.save(entity.get());
     }
 

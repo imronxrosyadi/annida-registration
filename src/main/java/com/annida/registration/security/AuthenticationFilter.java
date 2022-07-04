@@ -1,11 +1,13 @@
 package com.annida.registration.security;
 
 import com.annida.registration.model.User;
+import com.annida.registration.model.dto.AdditionalInfoDto;
 import com.annida.registration.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.json.JSONObject;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -67,9 +69,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String secretKey = "$2a$10$/6GvrEQhD4cf5SoMdTaSsuHxAWO31tktM576gpDrgKhph8yHFVBBeAWO31tktM576gpDrgKhph8yHFVBBe";
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
 
+        AdditionalInfoDto additionalInfoDto = new AdditionalInfoDto(user.getId(), user.getUsername(), user.isAdmin());
+
         String token = Jwts.builder()
                 .signWith(key)
-                .setSubject(authResult.getName())
+                .setSubject(user.getId())
+//                .claim("additionalInfo", additionalInfoDto)
                 .setExpiration(
                         Date.from(LocalDateTime.now()
                                 .plusDays(1)
