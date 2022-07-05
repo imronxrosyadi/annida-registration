@@ -69,7 +69,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String secretKey = "$2a$10$/6GvrEQhD4cf5SoMdTaSsuHxAWO31tktM576gpDrgKhph8yHFVBBeAWO31tktM576gpDrgKhph8yHFVBBe";
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
 
-        AdditionalInfoDto additionalInfoDto = new AdditionalInfoDto(user.getId(), user.getUsername(), user.isAdmin());
+//        AdditionalInfoDto additionalInfoDto = new AdditionalInfoDto(user.getId(), user.getUsername(), user.isAdmin());
 
         String token = Jwts.builder()
                 .signWith(key)
