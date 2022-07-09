@@ -4,6 +4,7 @@ import com.annida.registration.model.Religion;
 import com.annida.registration.repository.ReligionRepository;
 import com.annida.registration.service.ReligionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,10 @@ public class ReligionServiceImpl implements ReligionService {
 
     @Override
     public void deleteById(String id) throws Exception {
-        religionRepositoryImpl.deleteById(id);
+        try {
+            religionRepositoryImpl.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("data used in another table");
+        }
     }
 }

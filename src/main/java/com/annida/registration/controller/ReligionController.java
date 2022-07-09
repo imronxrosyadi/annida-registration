@@ -51,10 +51,12 @@ public class ReligionController {
     public Response<?> deleteById(@PathVariable("id") String id) {
         try {
             religionService.deleteById(id);
-            return new Response<>(HttpStatus.OK, null);
+            System.out.println(" ====== after proccess");
+            return new Response<>(HttpStatus.OK, null, "Success Delete Religion");
         } catch (Exception e) {
             e.printStackTrace();
-            return new Response<>(HttpStatus.INTERNAL_SERVER_ERROR, null);
+            System.out.println(" ====== here is the catch");
+            return new Response<>(HttpStatus.INTERNAL_SERVER_ERROR, null, e.getMessage());
         }
     }
 

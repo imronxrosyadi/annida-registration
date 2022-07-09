@@ -50,10 +50,10 @@ public class SchoolYearController {
     public Response<?> deleteById(@PathVariable("id") String id) {
         try {
             schoolYearService.deleteById(id);
-            return new Response<>(HttpStatus.OK, null);
+            return new Response<>(HttpStatus.OK, null, "Success Delete School Year");
         } catch (Exception e) {
             e.printStackTrace();
-            return new Response<>(HttpStatus.INTERNAL_SERVER_ERROR, null);
+            return new Response<>(HttpStatus.INTERNAL_SERVER_ERROR, null, e.getMessage());
         }
     }
 }

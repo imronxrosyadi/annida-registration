@@ -4,6 +4,7 @@ import com.annida.registration.model.SchoolYear;
 import com.annida.registration.repository.SchoolYearRepository;
 import com.annida.registration.service.SchoolYearService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,10 @@ public class SchoolYearServiceImpl implements SchoolYearService {
 
     @Override
     public void deleteById(String id) throws Exception {
-        schoolYearRepository.deleteById(id);
+        try {
+            schoolYearRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("data used in another table");
+        }
     }
 }
